@@ -6899,6 +6899,30 @@ Class UserRepository extends User{
 		return $users;
 	}
 
+	public function alluserList($data){
+		$model 		= "App\User";	
+		$name = @$data['name'];
+		$userId= Auth::user()->id;
+        $Is_method  = 0; 
+		$query = $model::query();
+		if(isset($name)){
+			//echo $selected_date ; exit;
+				$query =$query->where('first_name','LIKE','%'.$name.'%');
+		}
+
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type')
+				->where('users.id','!=',$userId)
+				->where('users.id','!=',1)
+				//->leftjoin('users','follows.user_id','users.id')
+				//->leftjoin('follows','users.id','follows.user_id')
+				->orderBy('users.first_name', 'ASC')
+				->paginate(10,['*'],'page_no');
+
+		$query->total_count = $model::where('users.id','!=',$userId)->where('users.id','!=',1)
+				->count();
+		$users = $query;
+		return $users;
+	}
 
 	public function createDebet($data){
 		//print_r($data); exit;

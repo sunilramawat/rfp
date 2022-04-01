@@ -2684,6 +2684,24 @@ Class ApiService{
 		return  $data;
 	}	
 
+	public function alluserList($request){
+		$data = new DataService();
+		$UserRepostitory = new UserRepository();
+		$arg['id'] 	   = Auth::user()->id;
+		$user_list  = $UserRepostitory->alluserList($request);
+		if($user_list){
+			$data->error_code = 280;
+			$data->data = $user_list;
+		
+		}else{
+
+			$data->error_code = 634;
+
+		}
+		
+		
+		return  $data;
+	}
 	public function createDebet($method,$arg){
 
 		$data = new DataService();

@@ -25,7 +25,7 @@ final class CustomVerfication{
   	$client = new Client($account_sid, $auth_token);
   	$client->messages->create($recipients, ['from' => $twilio_number, 'body' => $message] );
 
-  	//echo '<pre>'; print_r($client); exit;
+  	echo '<pre>'; print_r($client); exit;
 
 	} 
 	

@@ -6556,7 +6556,7 @@ class ApiController extends Controller
 
     
 
-     /***********************************************************************************
+    /***********************************************************************************
     * API                   => User List                                               *
     * Description           => It is to get User List                                  *
     * Required Parameters   => Access Token                                            *
@@ -6607,6 +6607,71 @@ class ApiController extends Controller
                  $response = [
                     'code'  =>  200,
                     'msg'   =>  $msg,
+                    'data'  =>  $user_list,
+       
+                ];
+            }else{
+                $response = [
+                    'code' => $Check->error_code,
+                    'msg'=>  $msg
+                ];
+            }
+
+            return $response;
+        }   
+    }
+
+    /***********************************************************************************
+    * API                   => User List                                               *
+    * Description           => It is to get User List                                  *
+    * Required Parameters   => Access Token                                            *
+    * Created by            => Sunil                                                   *
+    ************************************************************************************/
+
+    public function alluserList(Request $request){
+       
+        if($request->method() == 'POST'){
+
+            $ApiService = new ApiService();
+            $UserRepostitory = new UserRepository();
+            $Check = $ApiService->alluserList($request);
+            $error_msg = new Msg();
+
+            $msg =  $error_msg->responseMsg($Check->error_code);
+            if($Check->error_code == 280){
+                $data = $Check->data;   
+                $responseOld = [
+                    'data'  => $data->toArray()    
+                ];
+                 // print_r($Check->data); exit;           
+                //echo '<pre>'; print_r($responseOld['data']['data']); exit;
+                $user_list['user_list'] = array();
+                foreach($responseOld['data']['data']  as $list){
+                    $user_array = array();
+                    //echo '<pre>';print_r($list); exit;
+                    $user_array['id'] =  @$list['userid'] ? $list['userid'] : '';
+                    $user_array['picUrl']  =   @$list['picUrl'] ? $list['picUrl'] : '';
+                    $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
+                    $user_array['designation']  =   @$list['designation'] ? $list['designation'] : '';
+                    $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
+                    $user_array['is_verified'] = 1;
+                    $user_array['location']  =   @$list['location'] ? $list['location'] : '';
+                    $check_is_follow  = $UserRepostitory->check_is_follow($list['userid']);
+                    $user_array['is_follow']  =   $check_is_follow;
+                    array_push($user_list['user_list'],$user_array);
+                }
+                    $user_list['paging']['current_page'] = $responseOld['data']['current_page'];
+                    $user_list['paging']['first_page_url'] = $responseOld['data']['first_page_url'];
+                    $user_list['paging']['from'] = $responseOld['data']['from']?$responseOld['data']['from']:0;
+                    $user_list['paging']['last_page'] = $responseOld['data']['last_page'];
+                    $user_list['paging']['last_page_url'] = $responseOld['data']['last_page_url'];
+                    $user_list['paging']['per_page'] = $responseOld['data']['per_page'];
+                    $user_list['paging']['to'] = $responseOld['data']['to']?$responseOld['data']['to']:0;
+                    $user_list['paging']['total'] = $responseOld['data']['total']?$responseOld['data']['total']:0;
+                //echo '<pre>'; print_r($responseOld['data']); exit;
+                 $response = [
+                    'code'  =>  200,
+                    'msg'   =>  'All User List',
                     'data'  =>  $user_list,
        
                 ];

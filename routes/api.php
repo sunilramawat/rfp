@@ -192,8 +192,10 @@ Route::get('chip_list','ApiController@chip_list')->middleware('auth:api');
 Route::get('chip_data_list','ApiController@chip_data_list')->middleware('auth:api');
 Route::post('userList','ApiController@userList')->middleware('auth:api');
 
+Route::post('alluserList','ApiController@alluserList')->middleware('auth:api');
 
 //Forum Section 
+
 Route::post('createDebet','ApiController@createDebet')->middleware('auth:api');
 Route::get('debetrequestList','ApiController@debetrequestList')->middleware('auth:api');
 Route::post('debetacceptDecline','ApiController@debetacceptDecline')->middleware('auth:api');
