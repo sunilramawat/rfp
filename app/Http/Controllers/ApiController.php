@@ -1846,33 +1846,7 @@ class ApiController extends Controller
         }   
     }
 
-    public function agoraToken(Request $request){
-        $appID = "4544fc186fcc4ae79e2d3ddf6c9ce4c01";
-        $appCertificate = "e7786275285a42d3aad478cb91856f3dk";
-        //$channelName = "e7786275285a42d3aad478cb91856f3dk";
-        $channelName = $request['channel_name'];
-        $userId= Auth::user()->id; 
-        $uid = $userId;
-        $uidStr = "2882341273";
-        $role = RtcTokenBuilder::RoleAttendee;
-        $expireTimeInSeconds = 3600;
-        $currentTimestamp = (new DateTime("now", new \DateTimeZone('UTC')))->getTimestamp();
-        $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
-
-        $tokenuId = RtcTokenBuilder::buildTokenWithUid($appID, $appCertificate, $channelName, $uid, $role, $privilegeExpiredTs);
-       // echo 'Token with int uid: ' . $tokenuId . PHP_EOL;
-       // echo $tokenuId;
-        $tokenAccountId = RtcTokenBuilder::buildTokenWithUserAccount($appID, $appCertificate, $channelName, $uidStr, $role, $privilegeExpiredTs);
-                //echo 'Token with user account: ' . $tokenAccountId . PHP_EOL;
-
-        $response = [
-            'code'  =>  200,
-            'msg'   =>  'Token created',
-            'tokenuId'  =>  $tokenuId,
-            'tokenAccountId' => $tokenAccountId,
-        ];
-        return $response;
-    }
+   
     /***************************************************************************************
       API                   => Get and update Profile                                     *
     * Description           => It is user for Profile                                     *
@@ -5609,6 +5583,7 @@ class ApiController extends Controller
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
                     $user_array['user_name']  =   @$list['username'] ? $list['username'] : '';
+                    $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
                     $user_array['username']  =   @$list['username'] ? $list['username'] : '';
                     array_push($user_list['users'],$user_array);
                 }
@@ -5669,6 +5644,7 @@ class ApiController extends Controller
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
                     $user_array['user_name']  =   @$list['username'] ? $list['username'] : '';
+                    $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
                     $user_array['gm_user_type']  =   @$list['gm_user_type'] ? $list['gm_user_type'] : '';
                     $user_array['user_type']  =   @$list['gm_user_type'] ? $list['gm_user_type'] : '';
                     $user_array['status']  =   @$list['gm_status'] ? $list['gm_status'] : 0;
@@ -5738,6 +5714,7 @@ class ApiController extends Controller
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
                     $user_array['user_name']  =   @$list['username'] ? $list['username'] : '';
+                    $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
                     array_push($user_list['users'],$user_array);
                 }
                 //echo '<pre>'; print_r($responseOld['data']); exit;
@@ -6393,7 +6370,7 @@ class ApiController extends Controller
 
                 }
                 if($list['repost_id'] != ''){
-                    $repost = DB::table('posts')->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+                    $repost = DB::table('posts')->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','posts.*')
                     ->where('posts.id','=',$list['repost_id'])
                     ->leftjoin('users','posts.u_id','users.id')
                     ->first();
@@ -6410,6 +6387,7 @@ class ApiController extends Controller
                     $partner_array['first_name']  =   @$repost->first_name ? $repost->first_name : '';
                     $partner_array['last_name']  =   @$repost->last_name ? $repost->last_name : '';
                     $partner_array['is_verified']  =   @$repost->is_verified ? $repost->is_verified : '';
+                    $partner_array['pollitical_orientation']  =   @$repost->pollitical_orientation ? $repost->pollitical_orientation : '';
                    // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
                     $partner_array['user_type']  =   @$repost->user_type ? $repost->user_type : '';
                     $partner_array['post_type']  =   @$repost->post_type ? $repost->post_type : '';
@@ -6481,6 +6459,7 @@ class ApiController extends Controller
                     $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
                     $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+                    $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
                    // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
                     $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
                     $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -6589,7 +6568,7 @@ class ApiController extends Controller
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['designation']  =   @$list['designation'] ? $list['designation'] : '';
                     $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
-                    $user_array['is_verified'] = 1;
+                    $user_array['is_verified'] = @$list['is_verified'] ? $list['is_verified'] : '';
                     $user_array['location']  =   @$list['location'] ? $list['location'] : '';
                     $check_is_follow  = $UserRepostitory->check_is_follow($list['userid']);
                     $user_array['is_follow']  =   $check_is_follow;
@@ -6654,7 +6633,7 @@ class ApiController extends Controller
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['designation']  =   @$list['designation'] ? $list['designation'] : '';
                     $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
-                    $user_array['is_verified'] = 1;
+                    $user_array['is_verified'] =  @$list['is_verified'] ? $list['is_verified'] : '';
                     $user_array['location']  =   @$list['location'] ? $list['location'] : '';
                     $check_is_follow  = $UserRepostitory->check_is_follow($list['userid']);
                     $user_array['is_follow']  =   $check_is_follow;
@@ -6771,6 +6750,7 @@ class ApiController extends Controller
                     $user_array['status'] =  @$list['status'] ? $list['status'] : 0;
                     $user_array['userid'] =  @$list['u_id'] ? $list['u_id'] : 0;
                     $user_array['picUrl']  =   @$list['picUrl'] ? $list['picUrl'] : '';
+                    $user_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
                     $user_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
                     $user_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
                     $user_array['user_name']  =   @$list['username'] ? $list['username'] : '';
@@ -6847,5 +6827,34 @@ class ApiController extends Controller
 
             return $response;
         }   
+    }
+
+
+    public function agoraToken(Request $request){
+        $appID = "4544fc186fcc4ae79e2d3ddf6c9ce4c0";
+        $appCertificate = "e7786275285a42d3aad478cb91856f3d";
+        //$channelName = "e7786275285a42d3aad478cb91856f3d";
+        $channelName = $request['channel_name'];
+        $userId= Auth::user()->id; 
+        $uid = 0; //    $userId;
+        $uidStr = "2882341273";
+        $role = RtcTokenBuilder::RoleAttendee;
+        $expireTimeInSeconds = 3600;
+        $currentTimestamp = (new DateTime("now", new \DateTimeZone('UTC')))->getTimestamp();
+        $privilegeExpiredTs = $currentTimestamp + $expireTimeInSeconds;
+
+        $tokenuId = RtcTokenBuilder::buildTokenWithUid($appID, $appCertificate, $channelName, $uid, $role, $privilegeExpiredTs);
+       // echo 'Token with int uid: ' . $tokenuId . PHP_EOL;
+       // echo $tokenuId;
+        $tokenAccountId = RtcTokenBuilder::buildTokenWithUserAccount($appID, $appCertificate, $channelName, $uidStr, $role, $privilegeExpiredTs);
+                //echo 'Token with user account: ' . $tokenAccountId . PHP_EOL;
+
+        $response = [
+            'code'  =>  200,
+            'msg'   =>  'Token created',
+            'tokenuId'  =>  $tokenuId,
+            'tokenAccountId' => $tokenAccountId,
+        ];
+        return $response;
     }
 }

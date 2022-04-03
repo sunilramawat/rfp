@@ -184,7 +184,7 @@ Class UserRepository extends User{
 				$user->save();
             }*/
             
-				$verify = $CustomVerfication->phoneVerification($message,$phone);
+			//$verify = $CustomVerfication->phoneVerification($message,$phone);
             //$verify = $CustomVerfication->phoneVerification($message,"+917340337597");
 
 		}else{
@@ -904,7 +904,7 @@ Class UserRepository extends User{
 				
 			}
 			$partner_array['code'] = 200;
-			$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+			$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','posts.*')
 					->where('posts.id', $lastid)
 					->leftjoin('users','posts.u_id','users.id')
 					->first();
@@ -944,6 +944,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
 	        $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -1747,7 +1748,7 @@ Class UserRepository extends User{
 
     // Get post detail Model
     public function post_response($postid,$result=null){
-    	$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+    	$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','posts.*')
 					->where('posts.id', $postid)
 					->leftjoin('users','posts.u_id','users.id')
 					->first();
@@ -1776,6 +1777,7 @@ Class UserRepository extends User{
         $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
         $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
         $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
        // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
         $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -1878,7 +1880,7 @@ Class UserRepository extends User{
 			$userData['code'] = 200;
 			//$userData['c_id'] = @$lastid;
 
-			$commentvalue = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','comments.*')
+			$commentvalue = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','comments.*')
 			->where('comments.c_id', $lastid)
 			->leftjoin('users','comments.u_id','users.id')
 			->first();
@@ -1895,6 +1897,7 @@ Class UserRepository extends User{
 		        $userData['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $userData['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $userData['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $userData['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $userData['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $userData['like_count']  =   $comment_like_count;
 		       
@@ -1993,7 +1996,7 @@ Class UserRepository extends User{
 			$lastid = $post->id;
 
 			$partner_array['code'] = 200;
-			$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+			$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','posts.*')
 					->where('posts.id', @$data['post_id'])
 					->leftjoin('users','posts.u_id','users.id')
 					->first();
@@ -2032,6 +2035,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
 	        $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -2398,7 +2402,7 @@ Class UserRepository extends User{
 			$query =$query->where('post_type','=',@$post_type);
 		}
 
-		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_members.*')
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_members.*')
 				->where('group_members.gm_g_id',$group_id)
 				->where('group_members.gm_status',1)
 				->leftjoin('users','group_members.gm_u_id','users.id')
@@ -2424,7 +2428,7 @@ Class UserRepository extends User{
 			$query =$query->where('post_type','=',@$post_type);
 		}
 
-		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_members.*')
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_members.*')
 				->where('group_members.gm_status',0)
 				->where('group_members.gm_g_id',$data['g_id'])
 				//->where('group_members.gm_u_id',$userId)
@@ -2564,7 +2568,7 @@ Class UserRepository extends User{
 			$post->save();
 			$lastid = $post->id;
 			$partner_array['code'] = 200;
-			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_posts.*')
 					->where('group_posts.id', $lastid)
 					->leftjoin('users','group_posts.u_id','users.id')
 					->first();
@@ -2603,6 +2607,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
 	        $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -2724,7 +2729,7 @@ Class UserRepository extends User{
 			$lastid = $post->id;
 
 			$partner_array['code'] = 200;
-			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_posts.*')
 					->where('group_posts.id', @$data['post_id'])
 					->leftjoin('users','group_posts.u_id','users.id')
 					->first();
@@ -2764,6 +2769,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
 	        $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -2879,7 +2885,7 @@ Class UserRepository extends User{
 	}
 
 	public function group_post_detail($data){
-		$checkPost = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+		$checkPost = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_posts.*')
 			->where('group_posts.id', $data)
 			->leftjoin('users','group_posts.u_id','users.id')
 			->first();
@@ -2895,7 +2901,7 @@ Class UserRepository extends User{
 			 	$is_repost = false;
 			 	$repost_id = 0;
 			 }		
-			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+			$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_posts.*')
 				->where('group_posts.id', $data)
 				->leftjoin('users','group_posts.u_id','users.id')
 				->first();
@@ -2923,6 +2929,7 @@ Class UserRepository extends User{
 		        $partner_array['first_name']  =   @$checkPost['first_name'] ? $checkPost['first_name'] : '';
 		        $partner_array['last_name']  =   @$checkPost['last_name'] ? $checkPost['last_name'] : '';
 		        $partner_array['is_verified']  =   @$checkPost['is_verified'] ? $checkPost['is_verified'] : '';
+		        $partner_array['pollitical_orientation']  =   @$checkPost['pollitical_orientation'] ? $checkPost['pollitical_orientation'] : '';
 		       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 		        $partner_array['user_type']  =   @$checkPost['user_type'] ? $checkPost['user_type'] : '';
 
@@ -2990,7 +2997,7 @@ Class UserRepository extends User{
 	            $partner_array['post_data']['options'][3]['is_voted']  =  $vote_count['is_voted_four'];
 	            
 	        }
-	        $comment = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_comments.*')
+	        $comment = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_comments.*')
 				->where('group_comments.post_id', $data)
 				->WhereNull('group_comments.parent_id')
 				->leftjoin('users','group_comments.u_id','users.id')
@@ -3009,14 +3016,17 @@ Class UserRepository extends User{
 			        $partner_array['post_data']['comments'][$commentkey]['user_name']  =   @$commentvalue['username'] ? $commentvalue['username'] : '';
 			        $partner_array['post_data']['comments'][$commentkey]['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 			        $partner_array['post_data']['comments'][$commentkey]['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
+			        
 			        $partner_array['post_data']['comments'][$commentkey]['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+			       
+			        $partner_array['post_data']['comments'][$commentkey]['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 			        $partner_array['post_data']['comments'][$commentkey]['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 			        $partner_array['post_data']['comments'][$commentkey]['like_count']  =   $comment_like_count;
 			       
 			        $myowncommenton = $this->group_my_comment_like_count($commentvalue['c_id'],Auth::user()->id);
 			        $partner_array['post_data']['comments'][$commentkey]['is_liked']  =  $myowncommenton;
 
-			        $reply = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_comments.*')
+			        $reply = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_comments.*')
 					->where('group_comments.parent_id', $commentvalue['c_id'])
 					->leftjoin('users','group_comments.u_id','users.id')
 					->get();
@@ -3036,6 +3046,8 @@ Class UserRepository extends User{
 					        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['last_name']  =   @$replyvalue['last_name'] ? $replyvalue['last_name'] : '';
 
 					        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['description']  =   @$replyvalue['description'] ? $replyvalue['description'] : '';
+					        
+					        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['pollitical_orientation']  =   @$replyvalue['pollitical_orientation'] ? $replyvalue['pollitical_orientation'] : '';
 
 					        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['posted_time']  =   @$replyvalue['created_at'] ? $replyvalue['created_at'] : '';
 
@@ -3093,7 +3105,7 @@ Class UserRepository extends User{
 			}
 
 				
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_posts.*')
 					->where('status',1)
 					->where('group_posts.g_id',$g_id )
 					->leftjoin('users','group_posts.u_id','users.id')
@@ -3199,7 +3211,7 @@ Class UserRepository extends User{
 			$userData['code'] = 200;
 			//$userData['c_id'] = @$lastid;
 
-			$commentvalue = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_comments.*')
+			$commentvalue = GroupComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','group_comments.*')
 			->where('group_comments.c_id', $lastid)
 			->leftjoin('users','group_comments.u_id','users.id')
 			->first();
@@ -3216,6 +3228,7 @@ Class UserRepository extends User{
 		        $userData['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $userData['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $userData['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $userData['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $userData['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $userData['like_count']  =   $comment_like_count;
 		       
@@ -3464,7 +3477,7 @@ Class UserRepository extends User{
 			$userData['code'] = 200;
 			//$userData['c_id'] = @$lastid;
 
-			$commentvalue = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forum_comments.*')
+			$commentvalue = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forum_comments.*')
 			->where('forum_comments.c_id', $lastid)
 			->leftjoin('users','forum_comments.u_id','users.id')
 			->first();
@@ -3481,6 +3494,7 @@ Class UserRepository extends User{
 		        $userData['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $userData['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $userData['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $userData['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $userData['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $userData['like_count']  =   $comment_like_count;
 		       
@@ -3580,7 +3594,7 @@ Class UserRepository extends User{
 
     // Get post detail Model
     public function forum_response($postid,$result=null){
-    	$list = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forums.*')
+    	$list = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forums.*')
 					->where('forums.id', $postid)
 					->leftjoin('users','forums.u_id','users.id')
 					->first();
@@ -3605,6 +3619,7 @@ Class UserRepository extends User{
         $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
         $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
         $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
        // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
         $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -3626,7 +3641,7 @@ Class UserRepository extends User{
     } 
 
     public function forum_detail($data){
-		$checkPost = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forums.*')
+		$checkPost = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forums.*')
 			->where('forums.id', $data)
 			->leftjoin('users','forums.u_id','users.id')
 			->first();
@@ -3640,7 +3655,7 @@ Class UserRepository extends User{
 		 	$is_repost = false;
 		 	$repost_id = 0;
 		 }		
-		$list = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forums.*')
+		$list = Forum::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forums.*')
 			->where('forums.id', $data)
 			->leftjoin('users','forums.u_id','users.id')
 			->first();
@@ -3667,6 +3682,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$checkPost['first_name'] ? $checkPost['first_name'] : '';
 	        $partner_array['last_name']  =   @$checkPost['last_name'] ? $checkPost['last_name'] : '';
 	        $partner_array['is_verified']  =   @$checkPost['is_verified'] ? $checkPost['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$checkPost['pollitical_orientation'] ? $checkPost['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$checkPost['user_type'] ? $checkPost['user_type'] : '';
 
@@ -3714,7 +3730,7 @@ Class UserRepository extends User{
         */
         //$vote_count = $this->vote_count($postid);
         
-        $comment = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forum_comments.*')
+        $comment = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forum_comments.*')
 			->where('forum_comments.post_id', $data)
 			->WhereNull('forum_comments.parent_id')
 			->leftjoin('users','forum_comments.u_id','users.id')
@@ -3734,13 +3750,14 @@ Class UserRepository extends User{
 		        $partner_array['post_data']['comments'][$commentkey]['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $partner_array['post_data']['comments'][$commentkey]['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['like_count']  =   $comment_like_count;
 		       
 		        $myowncommenton = $this->forum_my_comment_like_count($commentvalue['c_id'],Auth::user()->id);
 		        $partner_array['post_data']['comments'][$commentkey]['is_liked']  =  $myowncommenton;
 
-		        $reply = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','forum_comments.*')
+		        $reply = ForumComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','forum_comments.*')
 				->where('forum_comments.parent_id', $commentvalue['c_id'])
 				->leftjoin('users','forum_comments.u_id','users.id')
 				->get();
@@ -3760,6 +3777,8 @@ Class UserRepository extends User{
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['last_name']  =   @$replyvalue['last_name'] ? $replyvalue['last_name'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['description']  =   @$replyvalue['description'] ? $replyvalue['description'] : '';
+				        
+				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['pollitical_orientation']  =   @$replyvalue['pollitical_orientation'] ? $replyvalue['pollitical_orientation'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['posted_time']  =   @$replyvalue['created_at'] ? $replyvalue['created_at'] : '';
 
@@ -3840,7 +3859,7 @@ Class UserRepository extends User{
 			}
 
 				
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation','vote_them_outs.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','users.pollitical_orientation','vote_them_outs.*')
 					->where('status',1)
 					->leftjoin('users','vote_them_outs.u_id','users.id')
 					->orderBy('vote_them_outs.id', 'DESC')
@@ -3933,7 +3952,7 @@ Class UserRepository extends User{
 			$userData['code'] = 200;
 			//$userData['c_id'] = @$lastid;
 
-			$commentvalue = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_out_comments.*')
+			$commentvalue = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_out_comments.*')
 			->where('vote_them_out_comments.c_id', $lastid)
 			->leftjoin('users','vote_them_out_comments.u_id','users.id')
 			->first();
@@ -3950,6 +3969,7 @@ Class UserRepository extends User{
 		        $userData['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $userData['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $userData['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $userData['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $userData['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $userData['like_count']  =   $comment_like_count;
 		       
@@ -4049,7 +4069,7 @@ Class UserRepository extends User{
 
     // Get post detail Model
     public function vote_them_response($postid,$result=null){
-    	$list = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_outs.*')
+    	$list = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_outs.*')
 					->where('vote_them_outs.id', $postid)
 					->leftjoin('users','vote_them_outs.u_id','users.id')
 					->first();
@@ -4085,6 +4105,7 @@ Class UserRepository extends User{
         $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
         $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
         $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
        // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
         $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -4106,7 +4127,7 @@ Class UserRepository extends User{
     } 
 
     public function vote_them_detail($data){
-		$checkPost = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_outs.*')
+		$checkPost = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_outs.*')
 			->where('vote_them_outs.id', $data)
 			->leftjoin('users','vote_them_outs.u_id','users.id')
 			->first();
@@ -4120,7 +4141,7 @@ Class UserRepository extends User{
 		 	$is_repost = false;
 		 	$repost_id = 0;
 		// }		
-		$list = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_outs.*')
+		$list = VoteThemOut::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_outs.*')
 			->where('vote_them_outs.id', $data)
 			->leftjoin('users','vote_them_outs.u_id','users.id')
 			->first();
@@ -4155,6 +4176,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$checkPost['first_name'] ? $checkPost['first_name'] : '';
 	        $partner_array['last_name']  =   @$checkPost['last_name'] ? $checkPost['last_name'] : '';
 	        $partner_array['is_verified']  =   @$checkPost['is_verified'] ? $checkPost['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$checkPost['pollitical_orientation'] ? $checkPost['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$checkPost['user_type'] ? $checkPost['user_type'] : '';
 
@@ -4165,6 +4187,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         
@@ -4197,7 +4220,7 @@ Class UserRepository extends User{
         */
         //$vote_count = $this->vote_count($postid);
         
-        $comment = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_out_comments.*')
+        $comment = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_out_comments.*')
 			->where('vote_them_out_comments.post_id', $data)
 			->WhereNull('vote_them_out_comments.parent_id')
 			->leftjoin('users','vote_them_out_comments.u_id','users.id')
@@ -4217,13 +4240,14 @@ Class UserRepository extends User{
 		        $partner_array['post_data']['comments'][$commentkey]['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $partner_array['post_data']['comments'][$commentkey]['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['like_count']  =   $comment_like_count;
 		       
 		        $myowncommenton = $this->vote_them_my_comment_like_count($commentvalue['c_id'],Auth::user()->id);
 		        $partner_array['post_data']['comments'][$commentkey]['is_liked']  =  $myowncommenton;
 
-		        $reply = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','vote_them_out_comments.*')
+		        $reply = VoteThemOutComment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','vote_them_out_comments.*')
 				->where('vote_them_out_comments.parent_id', $commentvalue['c_id'])
 				->leftjoin('users','vote_them_out_comments.u_id','users.id')
 				->get();
@@ -4243,6 +4267,8 @@ Class UserRepository extends User{
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['last_name']  =   @$replyvalue['last_name'] ? $replyvalue['last_name'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['description']  =   @$replyvalue['description'] ? $replyvalue['description'] : '';
+				        
+				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['pollitical_orientation']  =   @$replyvalue['pollitical_orientation'] ? $replyvalue['pollitical_orientation'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['posted_time']  =   @$replyvalue['created_at'] ? $replyvalue['created_at'] : '';
 
@@ -4325,7 +4351,7 @@ Class UserRepository extends User{
 			$model 		= "App\Models\RoomMessage";	
 			$r_id = @$data['r_id'];
 			$query = $model::query();
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','room_msgs.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','room_msgs.*')
 					->where('rm_id','=',@$lastid)
 					//->where('users.user_status',1)
 					->leftjoin('users','room_msgs.sender_id','users.id')
@@ -4393,7 +4419,7 @@ Class UserRepository extends User{
 			}
 			*/
 				
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','room_msgs.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','room_msgs.*')
 					->where('rm_r_id','=',@$r_id)
 					->leftjoin('users','room_msgs.sender_id','users.id')
 					->orderBy('room_msgs.rm_id', 'DESC')
@@ -4425,7 +4451,7 @@ Class UserRepository extends User{
 
 	// Get post detail Model
     public function group_post_response($postid,$result=null){
-    	$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','group_posts.*')
+    	$list = GroupPost::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','group_posts.*')
 					->where('group_posts.id', $postid)
 					->leftjoin('users','group_posts.u_id','users.id')
 					->first();
@@ -4454,6 +4480,7 @@ Class UserRepository extends User{
         $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
         $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
         $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
        // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
         $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         $partner_array['post_type']  =   @$list['post_type'] ? $list['post_type'] : '';
@@ -4902,7 +4929,7 @@ Class UserRepository extends User{
 			}
 
 				
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation','posts.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','users.pollitical_orientation','posts.*')
 					->where('status',1)
 					->leftjoin('users','posts.u_id','users.id')
 					->orderBy('posts.id', 'DESC')
@@ -4943,7 +4970,7 @@ Class UserRepository extends User{
 			}
 
 				
-			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','posts.*')
 					->where('status',1)
 					->where('post_type','!=',2)
 					->where('u_id',$userid)
@@ -4977,7 +5004,7 @@ Class UserRepository extends User{
 	
 
 	public function post_detail($data){
-		$checkPost = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+		$checkPost = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','posts.*')
 			->where('posts.id', $data)
 			->leftjoin('users','posts.u_id','users.id')
 			->first();
@@ -4991,7 +5018,7 @@ Class UserRepository extends User{
 		 	$is_repost = false;
 		 	$repost_id = 0;
 		 }		
-		$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*')
+		$list = Post::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','posts.*')
 			->where('posts.id', $data)
 			->leftjoin('users','posts.u_id','users.id')
 			->first();
@@ -5019,6 +5046,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$checkPost['first_name'] ? $checkPost['first_name'] : '';
 	        $partner_array['last_name']  =   @$checkPost['last_name'] ? $checkPost['last_name'] : '';
 	        $partner_array['is_verified']  =   @$checkPost['is_verified'] ? $checkPost['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$checkPost['pollitical_orientation'] ? $checkPost['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$checkPost['user_type'] ? $checkPost['user_type'] : '';
 
@@ -5029,6 +5057,7 @@ Class UserRepository extends User{
 	        $partner_array['first_name']  =   @$list['first_name'] ? $list['first_name'] : '';
 	        $partner_array['last_name']  =   @$list['last_name'] ? $list['last_name'] : '';
 	        $partner_array['is_verified']  =   @$list['is_verified'] ? $list['is_verified'] : '';
+	        $partner_array['pollitical_orientation']  =   @$list['pollitical_orientation'] ? $list['pollitical_orientation'] : '';
 	       // $partner_array['tags']  =   @$list['tags'] ? $list['tags'] : '';
 	        $partner_array['user_type']  =   @$list['user_type'] ? $list['user_type'] : '';
         
@@ -5096,7 +5125,7 @@ Class UserRepository extends User{
             $partner_array['post_data']['options'][3]['is_voted']  =  $vote_count['is_voted_four'];
             
         }
-        $comment = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','comments.*')
+        $comment = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','comments.*')
 			->where('comments.post_id', $data)
 			->WhereNull('comments.parent_id')
 			->leftjoin('users','comments.u_id','users.id')
@@ -5116,13 +5145,14 @@ Class UserRepository extends User{
 		        $partner_array['post_data']['comments'][$commentkey]['first_name']  =   @$commentvalue['first_name'] ? $commentvalue['first_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['last_name']  =   @$commentvalue['last_name'] ? $commentvalue['last_name'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['description']  =   @$commentvalue['description'] ? $commentvalue['description'] : '';
+		        $partner_array['post_data']['comments'][$commentkey]['pollitical_orientation']  =   @$commentvalue['pollitical_orientation'] ? $commentvalue['pollitical_orientation'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['posted_time']  =   @$commentvalue['created_at'] ? $commentvalue['created_at'] : '';
 		        $partner_array['post_data']['comments'][$commentkey]['like_count']  =   $comment_like_count;
 		       
 		        $myowncommenton = $this->my_comment_like_count($commentvalue['c_id'],Auth::user()->id);
 		        $partner_array['post_data']['comments'][$commentkey]['is_liked']  =  $myowncommenton;
 
-		        $reply = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','comments.*')
+		        $reply = Comment::select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.pollitical_orientation as pollitical_orientation','users.user_type as user_type','comments.*')
 				->where('comments.parent_id', $commentvalue['c_id'])
 				->leftjoin('users','comments.u_id','users.id')
 				->get();
@@ -5142,6 +5172,8 @@ Class UserRepository extends User{
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['last_name']  =   @$replyvalue['last_name'] ? $replyvalue['last_name'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['description']  =   @$replyvalue['description'] ? $replyvalue['description'] : '';
+
+				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['pollitical_orientation']  =   @$replyvalue['pollitical_orientation'] ? $replyvalue['pollitical_orientation'] : '';
 
 				        $partner_array['post_data']['comments'][$commentkey]['sub_comments'][$replykey]['posted_time']  =   @$replyvalue['created_at'] ? $replyvalue['created_at'] : '';
 
@@ -5310,7 +5342,7 @@ Class UserRepository extends User{
 			->orderBy('favourities.f_id', 'DESC')
 			->paginate(10,['*'],'page_no');*/
 		$userId= Auth::user()->id;
-		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','posts.*', 'favourities.f_id as fav_id','favourities.post_id as fav_post_id','favourities.f_user_id as fav_user_id')
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','posts.*', 'favourities.f_id as fav_id','favourities.post_id as fav_post_id','favourities.f_user_id as fav_user_id')
 				->where('favourities.f_user_id',$userId)
 				->leftjoin('posts','posts.id','favourities.post_id')
 				->leftjoin('users','users.id','posts.u_id')
@@ -5340,7 +5372,7 @@ Class UserRepository extends User{
 			$query =$query->where('post_type','=',@$post_type);
 		}
 
-		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','notifications.*')
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','notifications.*')
 				->where('notifications.n_status','!=',2)
 				->leftjoin('users','notifications.n_sender_id','users.id')
 				->orderBy('notifications.n_id', 'DESC')
@@ -5363,7 +5395,7 @@ Class UserRepository extends User{
 			$query =$query->where('post_type','=',@$post_type);
 		}
 
-		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','follows.*')
+		$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','users.pollitical_orientation as pollitical_orientation','follows.*')
 				->where('follows.follow_by',$userId)
 				->leftjoin('users','follows.user_id','users.id')
 				->orderBy('users.first_name', 'ASC')
@@ -7015,7 +7047,7 @@ Class UserRepository extends User{
 			return $users;
 		}else{ //sended by me
 			$query = $query->select('users.id as userid','users.first_name as first_name','users.last_name as last_name','users.username as username','users.photo as picUrl','users.user_status as is_verified','users.user_type as user_type','debets.*')
-					->where('debets.status',0)
+					//->where('debets.status',0)
 					->where('debets.u_id',$userId)
 					//->where('group_members.gm_u_id',$userId)
 					->leftjoin('users','debets.opponant_id','users.id')
